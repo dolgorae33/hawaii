@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>하은찬의 하와이 여행</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      background: linear-gradient(to bottom, #b3ecff, #e0f7fa);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 40px 0 20px;
+      font-size: 2.8em;
+      color: #0077b6;
+      text-shadow: 1px 1px 3px rgba(255,255,255,0.6);
+    }
+
+    .image-container {
+      max-width: 90%;
+      border: 6px solid #00bcd4;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    .image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .like-section {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+      font-size: 20px;
+      color: #007a91;
+      gap: 10px;
+    }
+
+    .like-button {
+      font-size: 28px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      user-select: none;
+    }
+
+    .like-button.animated {
+      animation: pop 0.3s ease-in-out;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.5); }
+      100% { transform: scale(1); }
+    }
+
+    .like-label, .like-count {
+      font-size: 18px;
+    }
+
+    .comment-section {
+      background-color: rgba(255, 255, 255, 0.8);
+      margin: 40px 0;
+      padding: 25px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .comment-section h2 {
+      margin-bottom: 15px;
+      color: #006d77;
+      font-size: 1.6em;
+      border-bottom: 2px solid #b2ebf2;
+      padding-bottom: 10px;
+    }
+
+    .comment-form {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    select {
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+      width: 120px;
+    }
+
+    input[type="text"] {
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+      flex: 1;
+    }
+
+    button {
+      background-color: #00bcd4;
+      color: white;
+      padding: 10px 20px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0097a7;
+    }
+
+    .comment-list {
+      margin-top: 10px;
+    }
+
+    .comment {
+      background-color: #ffffffcc;
+      padding: 10px 15px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .comment-left {
+      flex-grow: 1;
+    }
+
+    .comment .meta {
+      font-weight: bold;
+      color: #007a91;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .comment .text {
+      font-size: 14px;
+    }
+
+    .comment-like {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-left: 10px;
+      font-size: 16px;
+      color: #e91e63;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .comment-like.animated {
+      animation: pop 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>하은찬의 하와이 여행</h1>
+
+  <div class="image-container">
+    <img src="https://cdn.pixabay.com/photo/2014/11/27/02/52/sea-turtle-547162_640.jpg" alt="하와이 바다 거북">
+  </div>
+
+  <div class="like-section">
+    <div class="like-button" id="likeButton" onclick="increaseLike()">❤️</div>
+    <div class="like-label">좋아요</div>
+    <div class="like-count" id="likeCount">0</div>
+  </div>
+
+  <div class="comment-section">
+    <h2>🌴 하와이 여행 때 하고 싶은 것을 댓글로 남겨주세요</h2>
+    <div class="comment-form">
+      <select id="nameSelect">
+        <option value="노승우">노승우</option>
+        <option value="노하은">노하은</option>
+        <option value="노은찬">노은찬</option>
+        <option value="조인아">조인아</option>
+      </select>
+      <input type="text" id="commentInput" placeholder="하고 싶은 일을 써 주세요">
+      <button onclick="addComment()">등록</button>
+    </div>
+
+    <div class="comment-list" id="commentList"></div>
+  </div>
+
+  <script>
+    let likeCount = 0;
+
+    function increaseLike() {
+      likeCount++;
+      document.getElementById('likeCount').textContent = likeCount;
+      const likeBtn = document.getElementById('likeButton');
+      likeBtn.classList.add('animated');
+      setTimeout(() => likeBtn.classList.remove('animated'), 300);
+    }
+
+    function addComment() {
+      const name = document.getElementById('nameSelect').value;
+      const text = document.getElementById('commentInput').value.trim();
+      if (!text) return;
+
+      const date = new Date();
+      const dateString = date.toLocaleString();
+
+      const commentList = document.getElementById('commentList');
+      const commentEl = document.createElement('div');
+      commentEl.className = 'comment';
+
+      const left = document.createElement('div');
+      left.className = 'comment-left';
+      left.innerHTML = `
+        <div class="meta">${name} • ${dateString}</div>
+        <div class="text">${text}</div>
+      `;
+
+      const like = document.createElement('div');
+      like.className = 'comment-like';
+      like.innerHTML = `❤️ <span class="count">0</span>`;
+      like.addEventListener('click', function () {
+        const countSpan = this.querySelector('.count');
+        let count = parseInt(countSpan.textContent);
+        count++;
+        countSpan.textContent = count;
+        this.classList.add('animated');
+        setTimeout(() => this.classList.remove('animated'), 300);
+      });
+
+      commentEl.appendChild(left);
+      commentEl.appendChild(like);
+      commentList.prepend(commentEl);
+
+      document.getElementById('commentInput').value = '';
+    }
+  </script>
+
+</body>
+</html>
