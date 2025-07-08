@@ -1,252 +1,155 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>하은찬의 하와이 여행</title>
   <style>
     body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #a0e6ff, #ffffff);
       margin: 0;
       padding: 0;
-      font-family: 'Noto Sans KR', sans-serif;
-      background: linear-gradient(to bottom, #b3ecff, #e0f7fa);
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
     h1 {
-      margin: 40px 0 20px;
-      font-size: 2.8em;
+      margin-top: 30px;
       color: #0077b6;
-      text-shadow: 1px 1px 3px rgba(255,255,255,0.6);
+      font-size: 2.5em;
+      text-shadow: 1px 1px 2px #ccc;
     }
 
-    .image-container {
-      max-width: 90%;
-      border: 6px solid #00bcd4;
-      border-radius: 15px;
+    .image-box {
+      margin: 20px 0;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
-    .image-container img {
-      width: 100%;
-      height: auto;
-      display: block;
+    .image-box img {
+      width: 90vw;
+      max-width: 800px;
+      border-radius: 16px;
     }
 
     .like-section {
       display: flex;
       align-items: center;
-      margin-top: 15px;
-      font-size: 20px;
-      color: #007a91;
-      gap: 10px;
+      margin-bottom: 30px;
     }
 
-    .like-button {
-      font-size: 28px;
+    .heart {
+      font-size: 24px;
       cursor: pointer;
-      transition: transform 0.2s;
-      user-select: none;
+      margin-right: 10px;
+      transition: transform 0.2s ease;
     }
 
-    .like-button.animated {
-      animation: pop 0.3s ease-in-out;
+    .heart.clicked {
+      color: red;
+      transform: scale(1.4);
     }
 
-    @keyframes pop {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.5); }
-      100% { transform: scale(1); }
+    .comment-box {
+      background: #ffffffc0;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 90vw;
+      max-width: 700px;
+      margin-bottom: 50px;
     }
 
-    .like-label, .like-count {
-      font-size: 18px;
+    .comment-box label,
+    .comment-box select,
+    .comment-box input {
+      margin-bottom: 10px;
+      font-size: 16px;
     }
 
-    .comment-section {
-      background-color: rgba(255, 255, 255, 0.8);
-      margin: 40px 0;
-      padding: 25px;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 800px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    .comment-box input[type="text"] {
+      width: 70%;
+      padding: 8px;
+      margin-left: 10px;
     }
 
-    .comment-section h2 {
-      margin-bottom: 15px;
-      color: #006d77;
-      font-size: 1.6em;
-      border-bottom: 2px solid #b2ebf2;
-      padding-bottom: 10px;
-    }
-
-    .comment-form {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-
-    select {
-      font-size: 14px;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-family: inherit;
-      width: 120px;
-    }
-
-    input[type="text"] {
-      font-size: 14px;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-family: inherit;
-      flex: 1;
-    }
-
-    button {
-      background-color: #00bcd4;
-      color: white;
+    .comment-box button {
       padding: 10px 20px;
-      font-size: 14px;
+      background-color: #0077b6;
+      color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
     }
-
-    button:hover {
-      background-color: #0097a7;
-    }
-
-    .comment-list {
-      margin-top: 10px;
-    }
-
-    .comment {
-      background-color: #ffffffcc;
-      padding: 10px 15px;
-      border-radius: 12px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .comment-left {
-      flex-grow: 1;
-    }
-
-    .comment .meta {
-      font-weight: bold;
-      color: #007a91;
-      margin-bottom: 5px;
-      font-size: 14px;
-    }
-
-    .comment .text {
-      font-size: 14px;
-    }
-
-    .comment-like {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-left: 10px;
-      font-size: 16px;
-      color: #e91e63;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .comment-like.animated {
-      animation: pop 0.3s ease-in-out;
-    }
   </style>
 </head>
 <body>
-
   <h1>하은찬의 하와이 여행</h1>
 
-  <div class="image-container">
-    <img src="https://cdn.pixabay.com/photo/2014/11/27/02/52/sea-turtle-547162_640.jpg" alt="하와이 바다 거북">
+  <div class="image-box">
+    <img src="https://cdn.pixabay.com/photo/2014/11/27/02/52/sea-turtle-547162_640.jpg" alt="하와이 바다 거북" />
   </div>
 
   <div class="like-section">
-    <div class="like-button" id="likeButton" onclick="increaseLike()">❤️</div>
-    <div class="like-label">좋아요</div>
-    <div class="like-count" id="likeCount">0</div>
+    <span id="heart" class="heart">❤️</span>
+    <span id="like-count">0</span> 좋아요
   </div>
 
-  <div class="comment-section">
-    <h2>🌴 하와이 여행 때 하고 싶은 것을 댓글로 남겨주세요</h2>
-    <div class="comment-form">
+  <div class="comment-box">
+    <label>이름:
       <select id="nameSelect">
-        <option value="노승우">노승우</option>
-        <option value="노하은">노하은</option>
-        <option value="노은찬">노은찬</option>
-        <option value="조인아">조인아</option>
+        <option>노승우</option>
+        <option>노하은</option>
+        <option>노은찬</option>
+        <option>조인아</option>
       </select>
-      <input type="text" id="commentInput" placeholder="하고 싶은 일을 써 주세요">
-      <button onclick="addComment()">등록</button>
-    </div>
-
-    <div class="comment-list" id="commentList"></div>
+    </label>
+    <br />
+    <label>하고 싶은 것:
+      <input type="text" id="commentInput" placeholder="하와이 여행 때 하고 싶은 것을 댓글로 남겨주세요" />
+    </label>
+    <br />
+    <button onclick="submitComment()">댓글 남기기</button>
   </div>
 
   <script>
     let likeCount = 0;
+    let liked = false;
+    const heart = document.getElementById('heart');
+    const count = document.getElementById('like-count');
 
-    function increaseLike() {
+    heart.addEventListener('click', () => {
+      if (liked) return;
+      liked = true;
       likeCount++;
-      document.getElementById('likeCount').textContent = likeCount;
-      const likeBtn = document.getElementById('likeButton');
-      likeBtn.classList.add('animated');
-      setTimeout(() => likeBtn.classList.remove('animated'), 300);
-    }
+      count.textContent = likeCount;
+      heart.classList.add('clicked');
+      setTimeout(() => heart.classList.remove('clicked'), 300);
+    });
 
-    function addComment() {
-      const name = document.getElementById('nameSelect').value;
-      const text = document.getElementById('commentInput').value.trim();
-      if (!text) return;
+    function submitComment() {
+      const name = document.getElementById("nameSelect").value;
+      const comment = document.getElementById("commentInput").value;
+      if (!comment.trim()) return;
 
-      const date = new Date();
-      const dateString = date.toLocaleString();
+      // ✅ 이곳에 본인의 Apps Script 웹앱 URL을 넣으세요
+      const scriptUrl = "https://script.google.com/macros/s/AKfycbx-qY4_uAXZJOxJP6U63qcSfpyJpfox-MFmYcl511CQzgOA8uNrShZUhIR7E5tFSMLv/exec";
 
-      const commentList = document.getElementById('commentList');
-      const commentEl = document.createElement('div');
-      commentEl.className = 'comment';
-
-      const left = document.createElement('div');
-      left.className = 'comment-left';
-      left.innerHTML = `
-        <div class="meta">${name} • ${dateString}</div>
-        <div class="text">${text}</div>
-      `;
-
-      const like = document.createElement('div');
-      like.className = 'comment-like';
-      like.innerHTML = `❤️ <span class="count">0</span>`;
-      like.addEventListener('click', function () {
-        const countSpan = this.querySelector('.count');
-        let count = parseInt(countSpan.textContent);
-        count++;
-        countSpan.textContent = count;
-        this.classList.add('animated');
-        setTimeout(() => this.classList.remove('animated'), 300);
-      });
-
-      commentEl.appendChild(left);
-      commentEl.appendChild(like);
-      commentList.prepend(commentEl);
-
-      document.getElementById('commentInput').value = '';
+      fetch(scriptUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, comment })
+      })
+      .then(res => res.text())
+      .then(response => {
+        alert("댓글이 저장되었습니다!");
+        document.getElementById("commentInput").value = "";
+      })
+      .catch(err => alert("오류 발생: " + err));
     }
   </script>
-
 </body>
 </html>
