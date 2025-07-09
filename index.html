@@ -5,125 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>하은찬의 하와이 여행</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #a0e6ff, #ffffff);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    h1 {
-      margin-top: 30px;
-      color: #0077b6;
-      font-size: 2.5em;
-      text-shadow: 1px 1px 2px #ccc;
-    }
-
-    .image-box {
-      margin: 20px 0;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .image-box img {
-      width: 90vw;
-      max-width: 800px;
-      border-radius: 16px;
-    }
-
-    .like-section {
-      display: flex;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-
-    .heart {
-      font-size: 24px;
-      cursor: pointer;
-      margin-right: 10px;
-      transition: transform 0.2s ease;
-    }
-
-    .heart.clicked {
-      color: red;
-      transform: scale(1.4);
-    }
-
-    .comment-box {
-      background: #ffffffc0;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      width: 90vw;
-      max-width: 700px;
-      margin-bottom: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .comment-box select,
-    .comment-box input[type="text"] {
-      font-size: 16px;
-      padding: 8px;
-    }
-
-    .comment-box select {
-      width: 120px;
-    }
-
-    .comment-box input[type="text"] {
-      flex: 1;
-      min-width: 200px;
-    }
-
-    .comment-box button {
-      padding: 10px 20px;
-      background-color: #0077b6;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .comment-list {
-      width: 90vw;
-      max-width: 700px;
-      margin-bottom: 50px;
-    }
-
-    .comment-item {
-      background: #e6f7ff;
-      border-radius: 10px;
-      padding: 10px 15px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+    body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(to bottom, #a0e6ff, #ffffff); margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
+    h1 { margin-top: 30px; color: #0077b6; font-size: 2.5em; text-shadow: 1px 1px 2px #ccc; }
+    .image-box { margin: 20px 0; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
+    .image-box img { width: 90vw; max-width: 800px; border-radius: 16px; }
+    .like-section { display: flex; align-items: center; margin-bottom: 30px; }
+    .heart { font-size: 24px; cursor: pointer; margin-right: 10px; transition: transform 0.2s ease; }
+    .heart.clicked { color: red; transform: scale(1.4); }
+    .comment-box { background: #ffffffc0; padding: 20px; border-radius: 16px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); width: 90vw; max-width: 700px; margin-bottom: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .comment-box select { width: 120px; padding: 8px; font-size: 16px; }
+    .comment-box input[type="text"] { flex: 1; min-width: 200px; padding: 8px; font-size: 16px; }
+    .comment-box button { padding: 10px 20px; background-color: #0077b6; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    .comment-list { width: 90vw; max-width: 700px; margin-bottom: 50px; }
+    .comment-item { background: #e6f7ff; border-radius: 10px; padding: 10px 15px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
   </style>
 </head>
 <body>
   <h1>하은찬의 하와이 여행</h1>
-
   <div class="image-box">
     <img src="https://cdn.pixabay.com/photo/2014/11/27/02/52/sea-turtle-547162_640.jpg" alt="하와이 바다 거북" />
   </div>
-
   <div class="like-section">
-    <span id="heart" class="heart">❤️</span>
-    <span id="like-count">0</span> 좋아요
+    <span id="heart" class="heart">❤️</span><span id="like-count">0</span> 좋아요
   </div>
 
   <div class="comment-box">
     <select id="nameSelect">
-      <option>노승우</option>
-      <option>노하은</option>
-      <option>노은찬</option>
-      <option>조인아</option>
+      <option>노승우</option><option>노하은</option><option>노은찬</option><option>조인아</option>
     </select>
     <input type="text" id="commentInput" placeholder="하와이 여행 때 하고 싶은 것을 댓글로 남겨주세요" />
     <button onclick="submitComment()">댓글 남기기</button>
@@ -132,10 +40,11 @@
   <div class="comment-list" id="commentList"></div>
 
   <script>
-    let likeCount = 0;
-    let liked = false;
     const heart = document.getElementById('heart');
     const count = document.getElementById('like-count');
+    const commentList = document.getElementById('commentList');
+    let likeCount = 0;
+    let liked = false;
 
     heart.addEventListener('click', () => {
       if (liked) return;
@@ -146,18 +55,29 @@
       setTimeout(() => heart.classList.remove('clicked'), 300);
     });
 
+    // ✅ 댓글 불러오기 - 아래 URL에 본인의 Apps Script 웹앱 URL을 입력
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbw8xajaqIYOExtoPvVmhkWk7BWDW1gjHVFDQTaYmZx4rUag-Z1_u8TJx7ueULSLRYa0/exec";
+
+    window.onload = () => {
+      fetch(scriptUrl)
+        .then(res => res.json())
+        .then(data => {
+          data.reverse().forEach(item => addCommentToPage(item.name, item.comment, item.timestamp));
+        })
+        .catch(err => console.error("댓글 불러오기 실패:", err));
+    };
+
     function submitComment() {
       const name = document.getElementById("nameSelect").value;
-      const comment = document.getElementById("commentInput").value;
+      const comment = document.getElementById("commentInput").value.trim();
       const now = new Date().toLocaleString();
-      if (!comment.trim()) return;
+      if (!comment) return;
 
-      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfDgTuU0Ue0zKL7gXz4DQtqV7eJb_hk-6DOQmlAl7YfKk5Clg/formResponse";
-
-      const nameEntry = "entry.1234567890";
-      const commentEntry = "entry.2345678901";
-      const timeEntry = "entry.3456789012";
-      const likeEntry = "entry.4567890123";
+      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSe6LzSmuKVPi8kWNO3-4mL6ehcXMYtOaOYfCHjGc2B1u7aMog/formResponse";
+      const nameEntry = "entry.1234567890";     // 수정 필요
+      const commentEntry = "entry.2345678901";  // 수정 필요
+      const timeEntry = "entry.3456789012";     // 수정 필요
+      const likeEntry = "entry.4567890123";     // 수정 필요
 
       const formData = new FormData();
       formData.append(nameEntry, name);
@@ -165,28 +85,20 @@
       formData.append(timeEntry, now);
       formData.append(likeEntry, likeCount);
 
-      fetch(formUrl, {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-      })
-      .then(() => {
-        alert("댓글이 저장되었습니다!");
-        document.getElementById("commentInput").value = "";
-        addCommentToPage(name, comment, now);
-      })
-      .catch(err => {
-        console.error("폼 전송 오류:", err);
-        alert("댓글 저장 실패: " + err.message);
-      });
+      fetch(formUrl, { method: "POST", mode: "no-cors", body: formData })
+        .then(() => {
+          alert("댓글이 저장되었습니다!");
+          document.getElementById("commentInput").value = "";
+          addCommentToPage(name, comment, now);
+        })
+        .catch(err => alert("댓글 저장 실패: " + err.message));
     }
 
     function addCommentToPage(name, comment, time) {
-      const list = document.getElementById("commentList");
       const div = document.createElement("div");
       div.className = "comment-item";
-      div.textContent = `${name}: ${comment} (${time})`;
-      list.prepend(div);
+      div.textContent = `${time} · ${name}: ${comment}`;
+      commentList.prepend(div);
     }
   </script>
 </body>
