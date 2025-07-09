@@ -61,14 +61,17 @@
 
     const scriptUrl = "https://script.google.com/macros/s/AKfycbxFt7_AxxgaEbX4CcD_XPyaJ5PZBuGjRB12qCDo3soGCLLXncjwH_lss-Zm-x5lk4OD/exec";
 
-    window.onload = () => {
+    window.onload = () => loadComments();
+
+    function loadComments() {
       fetch(scriptUrl)
         .then(res => res.json())
         .then(data => {
+          commentList.innerHTML = '';
           data.reverse().forEach(item => addCommentToPage(item.name, item.comment, item.timestamp));
         })
         .catch(err => console.error("댓글 불러오기 실패:", err));
-    };
+    }
 
     function submitComment() {
       const name = document.getElementById("nameSelect").value;
@@ -90,9 +93,8 @@
 
       fetch(formUrl, { method: "POST", mode: "no-cors", body: formData })
         .then(() => {
-          alert("댓글이 저장되었습니다!");
           document.getElementById("commentInput").value = "";
-          setTimeout(() => location.reload(), 1000);
+          setTimeout(() => loadComments(), 1000);
         })
         .catch(err => alert("댓글 저장 실패: " + err.message));
     }
