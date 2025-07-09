@@ -5,112 +5,164 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>하은찬의 하와이 여행</title>
   <style>
-    body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(to bottom, #a0e6ff, #ffffff); margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
-    h1 { margin-top: 30px; color: #0077b6; font-size: 2.5em; text-shadow: 1px 1px 2px #ccc; }
-    .image-box { margin: 20px 0; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
-    .image-box img { width: 90vw; max-width: 800px; border-radius: 16px; }
-    .like-section { display: flex; align-items: center; margin-bottom: 30px; }
-    .heart { font-size: 24px; cursor: pointer; margin-right: 10px; transition: transform 0.2s ease; }
-    .heart.clicked { color: red; transform: scale(1.4); }
-    .comment-box { background: #ffffffc0; padding: 20px; border-radius: 16px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); width: 90vw; max-width: 700px; margin-bottom: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-    .comment-box select { width: 120px; padding: 8px; font-size: 16px; }
-    .comment-box input[type="text"] { flex: 1; min-width: 200px; padding: 8px; font-size: 16px; }
-    .comment-box button { padding: 10px 20px; background-color: #0077b6; color: white; border: none; border-radius: 8px; cursor: pointer; }
-    .comment-list { width: 90vw; max-width: 700px; margin-bottom: 50px; }
-    .comment-item { background: #e6f7ff; border-radius: 10px; padding: 10px 15px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; align-items: center; animation: fadeIn 0.5s ease; }
-    .comment-content { flex: 1; }
-    .comment-actions { display: flex; gap: 10px; align-items: center; }
-    .comment-actions span { cursor: pointer; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #a0e6ff, #ffffff);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin-top: 30px;
+      color: #0077b6;
+      font-size: 2.5em;
+      text-shadow: 1px 1px 2px #ccc;
+    }
+    .image-box {
+      margin: 20px 0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    .image-box img {
+      width: 90vw;
+      max-width: 800px;
+      border-radius: 16px;
+    }
+    .comment-box {
+      background: #ffffffcc;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 90vw;
+      max-width: 700px;
+      margin-bottom: 20px;
+    }
+    .comment-form {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    select, input[type="text"] {
+      padding: 8px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .comments-list {
+      width: 90vw;
+      max-width: 700px;
+    }
+    .comment {
+      background: #fff;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .heart-btn {
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .heart-btn.clicked {
+      color: red;
+      transform: scale(1.3);
+    }
   </style>
 </head>
 <body>
   <h1>하은찬의 하와이 여행</h1>
+
   <div class="image-box">
-    <img src="https://cdn.pixabay.com/photo/2014/11/27/02/52/sea-turtle-547162_640.jpg" alt="하와이 바다 거북" />
-  </div>
-  <div class="like-section">
-    <span id="heart" class="heart">❤️</span><span id="like-count">0</span> 좋아요
+    <img src="https://cdn.pixabay.com/photo/2014/11/27/02/52/sea-turtle-547162_640.jpg" alt="바다가운 이미지">
   </div>
 
   <div class="comment-box">
-    <select id="nameSelect">
-      <option>노승우</option><option>노하은</option><option>노은찬</option><option>조인아</option>
-    </select>
-    <input type="text" id="commentInput" placeholder="하와이 여행 때 하고 싶은 것을 댓글로 남겨주세요" />
-    <button onclick="submitComment()">댓글 남기기</button>
+    <div class="comment-form">
+      <select id="nameSelect">
+        <option>노승우</option>
+        <option>노하은</option>
+        <option>노은찬</option>
+        <option>조인아</option>
+      </select>
+      <input type="text" id="commentInput" placeholder="하와이 여행 때 하고 싶은 것을 댓글로 남겨주세요">
+      <button onclick="submitComment()">댓글 남기기</button>
+    </div>
   </div>
 
-  <div class="comment-list" id="commentList"></div>
+  <div class="comments-list" id="commentsList"></div>
 
   <script>
-    const heart = document.getElementById('heart');
-    const count = document.getElementById('like-count');
-    const commentList = document.getElementById('commentList');
-    let likeCount = 0;
-    let liked = false;
-
-    heart.addEventListener('click', () => {
-      if (liked) return;
-      liked = true;
-      likeCount++;
-      count.textContent = likeCount;
-      heart.classList.add('clicked');
-      setTimeout(() => heart.classList.remove('clicked'), 300);
-    });
-
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbxFt7_AxxgaEbX4CcD_XPyaJ5PZBuGjRB12qCDo3soGCLLXncjwH_lss-Zm-x5lk4OD/exec";
-
-    window.onload = () => loadComments();
-
-    function loadComments() {
-      fetch(scriptUrl)
-        .then(res => res.json())
-        .then(data => {
-          commentList.innerHTML = '';
-          data.reverse().forEach(item => addCommentToPage(item.name, item.comment, item.timestamp));
-        })
-        .catch(err => console.error("댓글 불러오기 실패:", err));
-    }
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyWndjZBTxhoqdanaUoSOhjyAZE_OZ1YaCFOuOkwjG8bDhyg_DSjBDNhjTe9SeGjgin_g/exec";
 
     function submitComment() {
       const name = document.getElementById("nameSelect").value;
-      const comment = document.getElementById("commentInput").value.trim();
-      const now = new Date().toLocaleString();
-      if (!comment) return alert("댓글을 입력해주세요");
+      const comment = document.getElementById("commentInput").value;
+      if (!comment.trim()) return;
 
-      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSe6LzSmuKVPi8kWNO3-4mL6ehcXMYtOaOYfCHjGc2B1u7aMog/formResponse";
-      const nameEntry = "entry.88831650";
-      const commentEntry = "entry.1214763051";
-      const timeEntry = "entry.2072434297";
-      const likeEntry = "entry.1736274036";
-
-      const formData = new FormData();
-      formData.append(nameEntry, name);
-      formData.append(commentEntry, comment);
-      formData.append(timeEntry, now);
-      formData.append(likeEntry, likeCount);
-
-      fetch(formUrl, { method: "POST", mode: "no-cors", body: formData })
-        .then(() => {
-          document.getElementById("commentInput").value = "";
-          setTimeout(() => loadComments(), 1000);
-        })
-        .catch(err => alert("댓글 저장 실패: " + err.message));
+      fetch(scriptURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, comment })
+      })
+      .then(res => res.text())
+      .then(() => {
+        document.getElementById("commentInput").value = "";
+        setTimeout(loadComments, 500); // 약간의 지연 후 새로고침
+      })
+      .catch(err => alert("오류: " + err));
     }
 
-    function addCommentToPage(name, comment, time) {
-      const div = document.createElement("div");
-      div.className = "comment-item";
-      div.innerHTML = `
-        <div class="comment-content">${time} · ${name}: ${comment}</div>
-        <div class="comment-actions">
-          <span class="comment-heart" onclick="alert('하트 클릭!')">💖</span>
-          <span class="comment-delete" onclick="this.closest('.comment-item').remove()">🗑️</span>
-        </div>
-      `;
-      commentList.prepend(div);
+    function loadComments() {
+      fetch(scriptURL)
+        .then(res => res.json())
+        .then(data => {
+          const container = document.getElementById("commentsList");
+          container.innerHTML = "";
+          data.forEach((item) => {
+            const div = document.createElement("div");
+            div.className = "comment";
+            div.innerHTML = `
+              <div>
+                <strong>${item.name}</strong>: ${item.comment}<br>
+                <small>${new Date(item.timestamp).toLocaleString()}</small>
+              </div>
+              <div>
+                <span class="heart-btn" onclick="likeComment(${item.row}, this)">❤️ ${item.likes}</span>
+              </div>
+            `;
+            container.appendChild(div);
+          });
+        });
     }
+
+    function likeComment(row, element) {
+      fetch(scriptURL, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ row })
+      })
+      .then(() => {
+        element.classList.add("clicked");
+        setTimeout(() => element.classList.remove("clicked"), 300);
+        const currentLikes = parseInt(element.textContent.replace("❤️", ""));
+        element.textContent = `❤️ ${currentLikes + 1}`;
+      });
+    }
+
+    // 초기 댓글 불러오기
+    window.onload = loadComments;
   </script>
 </body>
 </html>
