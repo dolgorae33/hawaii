@@ -13,11 +13,15 @@
     .heart { font-size: 24px; cursor: pointer; margin-right: 10px; transition: transform 0.2s ease; }
     .heart.clicked { color: red; transform: scale(1.4); }
     .comment-box { background: #ffffffc0; padding: 20px; border-radius: 16px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); width: 90vw; max-width: 700px; margin-bottom: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-    .comment-box select { width: 120px; padding: 8px; font-size: 16px; }
+    .comment-box select, .comment-box input[type="email"] { width: 120px; padding: 8px; font-size: 16px; }
     .comment-box input[type="text"] { flex: 1; min-width: 200px; padding: 8px; font-size: 16px; }
     .comment-box button { padding: 10px 20px; background-color: #0077b6; color: white; border: none; border-radius: 8px; cursor: pointer; }
     .comment-list { width: 90vw; max-width: 700px; margin-bottom: 50px; }
-    .comment-item { background: #e6f7ff; border-radius: 10px; padding: 10px 15px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+    .comment-item { background: #e6f7ff; border-radius: 10px; padding: 10px 15px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; align-items: center; animation: fadeIn 0.5s ease; }
+    .comment-content { flex: 1; }
+    .comment-actions { display: flex; gap: 10px; align-items: center; }
+    .comment-actions span { cursor: pointer; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
@@ -33,6 +37,7 @@
     <select id="nameSelect">
       <option>노승우</option><option>노하은</option><option>노은찬</option><option>조인아</option>
     </select>
+    <input type="email" id="emailInput" placeholder="이메일" />
     <input type="text" id="commentInput" placeholder="하와이 여행 때 하고 싶은 것을 댓글로 남겨주세요" />
     <button onclick="submitComment()">댓글 남기기</button>
   </div>
@@ -55,7 +60,6 @@
       setTimeout(() => heart.classList.remove('clicked'), 300);
     });
 
-    // ✅ 댓글 불러오기 - 아래 URL에 본인의 Apps Script 웹앱 URL을 입력
     const scriptUrl = "https://script.google.com/macros/s/AKfycbw8xajaqIYOExtoPvVmhkWk7BWDW1gjHVFDQTaYmZx4rUag-Z1_u8TJx7ueULSLRYa0/exec";
 
     window.onload = () => {
@@ -69,15 +73,16 @@
 
     function submitComment() {
       const name = document.getElementById("nameSelect").value;
+      const email = document.getElementById("emailInput").value.trim();
       const comment = document.getElementById("commentInput").value.trim();
       const now = new Date().toLocaleString();
-      if (!comment) return;
+      if (!comment || !email) return alert("이메일과 댓글을 모두 입력해주세요");
 
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSe6LzSmuKVPi8kWNO3-4mL6ehcXMYtOaOYfCHjGc2B1u7aMog/formResponse";
-      const nameEntry = "entry.1234567890";     // 수정 필요
-      const commentEntry = "entry.2345678901";  // 수정 필요
-      const timeEntry = "entry.3456789012";     // 수정 필요
-      const likeEntry = "entry.4567890123";     // 수정 필요
+      const nameEntry = "entry.88831650";
+      const commentEntry = "entry.1214763051";
+      const timeEntry = "entry.2072434297";
+      const likeEntry = "entry.1736274036";
 
       const formData = new FormData();
       formData.append(nameEntry, name);
@@ -97,7 +102,13 @@
     function addCommentToPage(name, comment, time) {
       const div = document.createElement("div");
       div.className = "comment-item";
-      div.textContent = `${time} · ${name}: ${comment}`;
+      div.innerHTML = `
+        <div class="comment-content">${time} · ${name}: ${comment}</div>
+        <div class="comment-actions">
+          <span class="comment-heart" onclick="alert('하트 클릭!')">💖</span>
+          <span class="comment-delete" onclick="this.closest('.comment-item').remove()">🗑️</span>
+        </div>
+      `;
       commentList.prepend(div);
     }
   </script>
