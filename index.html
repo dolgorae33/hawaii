@@ -60,7 +60,7 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       width: 90vw;
       max-width: 700px;
-      margin-bottom: 50px;
+      margin-bottom: 20px;
     }
 
     .comment-box label,
@@ -83,6 +83,20 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
+    }
+
+    .comment-list {
+      width: 90vw;
+      max-width: 700px;
+      margin-bottom: 50px;
+    }
+
+    .comment-item {
+      background: #e6f7ff;
+      border-radius: 10px;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
   </style>
 </head>
@@ -114,6 +128,8 @@
     <br />
     <button onclick="submitComment()">댓글 남기기</button>
   </div>
+
+  <div class="comment-list" id="commentList"></div>
 
   <script>
     let likeCount = 0;
@@ -155,13 +171,22 @@
         body: formData
       })
       .then(() => {
-        alert("댓글 + 좋아요 저장 완료!");
+        alert("댓글이 저장되었습니다!");
         document.getElementById("commentInput").value = "";
+        addCommentToPage(name, comment, now);
       })
       .catch(err => {
         console.error("폼 전송 오류:", err);
         alert("댓글 저장 실패: " + err.message);
       });
+    }
+
+    function addCommentToPage(name, comment, time) {
+      const list = document.getElementById("commentList");
+      const div = document.createElement("div");
+      div.className = "comment-item";
+      div.textContent = `${name}: ${comment} (${time})`;
+      list.prepend(div); // 최신 댓글이 위로
     }
   </script>
 </body>
