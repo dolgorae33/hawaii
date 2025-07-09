@@ -133,24 +133,34 @@
     function submitComment() {
       const name = document.getElementById("nameSelect").value;
       const comment = document.getElementById("commentInput").value;
+      const now = new Date().toLocaleString();
       if (!comment.trim()) return;
 
-      const scriptUrl = "https://script.google.com/macros/s/AKfycbzDnP3x8BrcbSRBgsb2SZU46SkqbX2d0aSG9bOS2lZ-DAzsjrSGY0nCYbI76e-ZKSM91A/exec";
+      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfDgTuU0Ue0zKL7gXz4DQtqV7eJb_hk-6DOQmlAl7YfKk5Clg/formResponse";
 
-      fetch(scriptUrl, {
+      const nameEntry = "entry.1234567890";
+      const commentEntry = "entry.2345678901";
+      const timeEntry = "entry.3456789012";
+      const likeEntry = "entry.4567890123";
+
+      const formData = new FormData();
+      formData.append(nameEntry, name);
+      formData.append(commentEntry, comment);
+      formData.append(timeEntry, now);
+      formData.append(likeEntry, likeCount);
+
+      fetch(formUrl, {
         method: "POST",
         mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, comment })
+        body: formData
       })
-      .then(res => res.text())
-      .then(response => {
-        alert("댓글이 저장되었습니다!");
+      .then(() => {
+        alert("댓글 + 좋아요 저장 완료!");
         document.getElementById("commentInput").value = "";
       })
       .catch(err => {
-        console.error("fetch 오류:", err);
-        alert("fetch 오류: " + err.message);
+        console.error("폼 전송 오류:", err);
+        alert("댓글 저장 실패: " + err.message);
       });
     }
   </script>
