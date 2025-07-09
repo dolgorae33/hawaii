@@ -61,19 +61,25 @@
       width: 90vw;
       max-width: 700px;
       margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
     }
 
-    .comment-box label,
     .comment-box select,
-    .comment-box input {
-      margin-bottom: 10px;
+    .comment-box input[type="text"] {
       font-size: 16px;
+      padding: 8px;
+    }
+
+    .comment-box select {
+      width: 120px;
     }
 
     .comment-box input[type="text"] {
-      width: 70%;
-      padding: 8px;
-      margin-left: 10px;
+      flex: 1;
+      min-width: 200px;
     }
 
     .comment-box button {
@@ -109,21 +115,17 @@
 
   <div class="like-section">
     <span id="heart" class="heart">❤️</span>
-    <span id="like-count">0 </span>  좋아요
+    <span id="like-count">0</span> 좋아요
   </div>
 
   <div class="comment-box">
-    <label>이름:
-      <select id="nameSelect">
-        <option>노승우</option>
-        <option>노하은</option>
-        <option>노은찬</option>
-        <option>조인아</option>
-      </select>
-    </label>
-     <label>하고 싶은 것:
-    <input type="text" id="commentInput" placeholder="하와이 여행 때 하고 싶은 것을 남겨주세요" />
-    </label>
+    <select id="nameSelect">
+      <option>노승우</option>
+      <option>노하은</option>
+      <option>노은찬</option>
+      <option>조인아</option>
+    </select>
+    <input type="text" id="commentInput" placeholder="하와이 여행 때 하고 싶은 것을 댓글로 남겨주세요" />
     <button onclick="submitComment()">댓글 남기기</button>
   </div>
 
@@ -184,7 +186,7 @@
       const div = document.createElement("div");
       div.className = "comment-item";
       div.textContent = `${name}: ${comment} (${time})`;
-      list.prepend(div); // 최신 댓글이 위로
+      list.prepend(div);
     }
   </script>
 </body>
