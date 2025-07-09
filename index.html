@@ -59,8 +59,7 @@
       setTimeout(() => heart.classList.remove('clicked'), 300);
     });
 
-    // ✅ 댓글 불러오기 Apps Script URL
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbw8xajaqIYOExtoPvVmhkWk7BWDW1gjHVFDQTaYmZx4rUag-Z1_u8TJx7ueULSLRYa0/exec";
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbzfDQsexSS8lSKIwgguv-TYQpE1nXyzpKMLc1nLwGN4llabd_5NMUa8xJd7gGNYHmFB/exec";
 
     window.onload = () => {
       fetch(scriptUrl)
@@ -93,7 +92,7 @@
         .then(() => {
           alert("댓글이 저장되었습니다!");
           document.getElementById("commentInput").value = "";
-          setTimeout(() => location.reload(), 1000); // 저장 후 새로고침하여 반영
+          setTimeout(() => location.reload(), 1000);
         })
         .catch(err => alert("댓글 저장 실패: " + err.message));
     }
